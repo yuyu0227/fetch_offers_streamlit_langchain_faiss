@@ -11,7 +11,7 @@ openai.api_key = os.environ.get("OPENAI_API_KEY")
 # Load pre-defined vector databse
 db = FAISS.load_local("./offers_faiss_index", OpenAIEmbeddings())
 
-
+query = None
 st.title("🏷️ Search for the best offers")
 query = st.text_input(
     "Start your search 👇",
@@ -20,7 +20,10 @@ query = st.text_input(
 
 st.button("Search")
 
-
+@st.cache_data(max_entries=200, persist=True)
+def query_db(query_text):
+    responses = db.similarity_search_with_relevance_scores(query_text)
+    return responses
 
 
 if query is not None:
@@ -28,7 +31,7 @@ if query is not None:
 
     progress_bar = st.progress(0, "Fetching the best offers for you..")
     
-    docs = db.similarity_search_with_relevance_scores(query)
+    docs = query_db(query)
     
     progress_bar.progress(1.0, "Offers found:")
 
