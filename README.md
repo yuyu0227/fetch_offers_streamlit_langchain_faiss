@@ -1,5 +1,5 @@
 # fetch_offers_streamlit_langchain_faiss
-Search most relevant offers given user query.
+Search most relevant offers given the user query.
 
 ## Usage
 
