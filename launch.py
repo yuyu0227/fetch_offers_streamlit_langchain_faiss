@@ -3,8 +3,8 @@ from langchain.vectorstores import FAISS
 from langchain.embeddings.openai import OpenAIEmbeddings
 import os
 import openai
-
-
+from dotenv import load_dotenv
+load_dotenv()
 openai.api_key = os.environ.get("OPENAI_API_KEY")
 
 
